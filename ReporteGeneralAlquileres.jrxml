@@ -1,0 +1,191 @@
+<!-- Created with Jaspersoft Studio version 7.0.8.final using JasperReports Library version 7.0.8-6f896111  -->
+<jasperReport name="ReporteGeneralAlquileres" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8f3a19c4-42b7-4e91-b605-9d2c7a481e03">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="AutoRent_PG"/>
+	<style name="EstiloFilaDetalle" mode="Opaque" backcolor="#FFFFFF">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
+		</conditionalStyle>
+	</style>
+	<query language="SQL"><![CDATA[SELECT
+    a.id_alquiler,
+    c.nombres || ' ' || c.apellidos AS cliente,
+    v.placa,
+    v.marca || ' ' || v.modelo AS vehiculo,
+    a.fecha_inicio,
+    a.fecha_fin,
+    (a.fecha_fin - a.fecha_inicio) AS dias,
+    a.tarifa_diaria_acordada,
+    ((a.fecha_fin - a.fecha_inicio) * a.tarifa_diaria_acordada) AS importe,
+    a.estado
+FROM public.alquileres a
+INNER JOIN public.clientes c ON a.id_cliente = c.id_cliente
+INNER JOIN public.vehiculos v ON a.id_vehiculo = v.id_vehiculo
+ORDER BY a.id_alquiler;]]></query>
+	<field name="id_alquiler" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="id_alquiler"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_alquiler"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="alquileres"/>
+	</field>
+	<field name="cliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cliente"/>
+		<property name="com.jaspersoft.studio.field.label" value="cliente"/>
+	</field>
+	<field name="placa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="placa"/>
+		<property name="com.jaspersoft.studio.field.label" value="placa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vehiculos"/>
+	</field>
+	<field name="vehiculo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="vehiculo"/>
+		<property name="com.jaspersoft.studio.field.label" value="vehiculo"/>
+	</field>
+	<field name="fecha_inicio" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fecha_inicio"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha_inicio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="alquileres"/>
+	</field>
+	<field name="fecha_fin" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fecha_fin"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha_fin"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="alquileres"/>
+	</field>
+	<field name="dias" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="dias"/>
+		<property name="com.jaspersoft.studio.field.label" value="dias"/>
+	</field>
+	<field name="tarifa_diaria_acordada" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="tarifa_diaria_acordada"/>
+		<property name="com.jaspersoft.studio.field.label" value="tarifa_diaria_acordada"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="alquileres"/>
+	</field>
+	<field name="importe" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="importe"/>
+		<property name="com.jaspersoft.studio.field.label" value="importe"/>
+	</field>
+	<field name="estado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="estado"/>
+		<property name="com.jaspersoft.studio.field.label" value="estado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="alquileres"/>
+	</field>
+	<variable name="CANTIDAD_CONTRATOS" calculation="Count" class="java.lang.Integer">
+		<expression><![CDATA[$F{id_alquiler}]]></expression>
+	</variable>
+	<variable name="TOTAL_DIAS" calculation="Sum" class="java.lang.Integer">
+		<expression><![CDATA[$F{dias}]]></expression>
+	</variable>
+	<variable name="IMPORTE_GENERAL" calculation="Sum" class="java.math.BigDecimal">
+		<expression><![CDATA[$F{importe}]]></expression>
+	</variable>
+	<background splitType="Stretch"/>
+	<title height="122" splitType="Stretch">
+		<element kind="staticText" uuid="b1000001-1111-4111-8111-000000000001" x="0" y="34" width="555" height="24" fontSize="17.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[AutoRent Nicaragua]]></text>
+		</element>
+		<element kind="staticText" uuid="b1000001-1111-4111-8111-000000000002" x="0" y="58" width="555" height="18" forecolor="#555555" fontSize="11.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Departamento de Operaciones]]></text>
+		</element>
+		<element kind="staticText" uuid="b1000001-1111-4111-8111-000000000003" x="0" y="79" width="555" height="20" fontSize="12.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[REPORTE GENERAL DE ALQUILERES]]></text>
+		</element>
+		<element kind="line" uuid="b1000001-1111-4111-8111-000000000004" x="0" y="114" width="555" height="1">
+			<pen lineColor="#CCCCCC"/>
+		</element>
+	</title>
+	<pageHeader height="28" splitType="Stretch">
+		<element kind="textField" uuid="b2000002-2222-4222-8222-000000000001" x="0" y="3" width="280" height="20" fontSize="10.0" vTextAlign="Middle">
+			<expression><![CDATA["Fecha de emisión: " + new java.text.SimpleDateFormat("dd/MM/yyyy").format(new java.util.Date())]]></expression>
+		</element>
+		<element kind="staticText" uuid="b2000002-2222-4222-8222-000000000002" x="385" y="3" width="170" height="20" fontSize="10.0" hTextAlign="Right" vTextAlign="Middle">
+			<text><![CDATA[Moneda: USD]]></text>
+		</element>
+	</pageHeader>
+	<columnHeader height="26" splitType="Stretch">
+		<element kind="rectangle" uuid="b3000003-3333-4333-8333-000000000001" x="0" y="0" width="555" height="26" backcolor="#3E6487" mode="Opaque">
+			<pen lineWidth="0.0"/>
+		</element>
+		<element kind="staticText" uuid="b3000003-3333-4333-8333-000000000002" x="8" y="0" width="60" height="26" forecolor="#FFFFFF" fontSize="9.5" bold="true" vTextAlign="Middle">
+			<text><![CDATA[Contrato]]></text>
+		</element>
+		<element kind="staticText" uuid="b3000003-3333-4333-8333-000000000003" x="72" y="0" width="180" height="26" forecolor="#FFFFFF" fontSize="9.5" bold="true" vTextAlign="Middle">
+			<text><![CDATA[Cliente / Vehículo]]></text>
+		</element>
+		<element kind="staticText" uuid="b3000003-3333-4333-8333-000000000004" x="255" y="0" width="100" height="26" forecolor="#FFFFFF" fontSize="9.5" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Período]]></text>
+		</element>
+		<element kind="staticText" uuid="b3000003-3333-4333-8333-000000000005" x="358" y="0" width="48" height="26" forecolor="#FFFFFF" fontSize="9.5" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Días]]></text>
+		</element>
+		<element kind="staticText" uuid="b3000003-3333-4333-8333-000000000006" x="410" y="0" width="65" height="26" forecolor="#FFFFFF" fontSize="9.5" bold="true" hTextAlign="Right" vTextAlign="Middle">
+			<text><![CDATA[Tarifa]]></text>
+		</element>
+		<element kind="staticText" uuid="b3000003-3333-4333-8333-000000000007" x="478" y="0" width="69" height="26" forecolor="#FFFFFF" fontSize="9.5" bold="true" hTextAlign="Right" vTextAlign="Middle">
+			<text><![CDATA[Importe]]></text>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<element kind="rectangle" uuid="b4000004-4444-4444-8444-000000000001" x="0" y="0" width="555" height="34" style="EstiloFilaDetalle">
+				<pen lineWidth="0.5" lineColor="#E0E4E8"/>
+			</element>
+			<element kind="textField" uuid="b4000004-4444-4444-8444-000000000002" x="8" y="0" width="60" height="34" fontSize="9.5" vTextAlign="Middle">
+				<expression><![CDATA[String.format("%03d", $F{id_alquiler})]]></expression>
+			</element>
+			<element kind="textField" uuid="b4000004-4444-4444-8444-000000000003" x="72" y="2" width="180" height="15" fontSize="9.5" vTextAlign="Middle">
+				<expression><![CDATA[$F{cliente} + " /"]]></expression>
+			</element>
+			<element kind="textField" uuid="b4000004-4444-4444-8444-000000000004" x="72" y="17" width="180" height="15" forecolor="#222222" fontSize="9.5" vTextAlign="Middle">
+				<expression><![CDATA[$F{vehiculo}]]></expression>
+			</element>
+			<element kind="textField" uuid="b4000004-4444-4444-8444-000000000005" x="255" y="0" width="100" height="34" fontSize="9.5" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[new java.text.SimpleDateFormat("dd/MM").format($F{fecha_inicio}) + " – " + new java.text.SimpleDateFormat("dd/MM").format($F{fecha_fin})]]></expression>
+			</element>
+			<element kind="textField" uuid="b4000004-4444-4444-8444-000000000006" x="358" y="0" width="48" height="34" fontSize="9.5" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$F{dias}]]></expression>
+			</element>
+			<element kind="textField" uuid="b4000004-4444-4444-8444-000000000007" x="410" y="0" width="65" height="34" fontSize="9.5" pattern="$#,##0.##" hTextAlign="Right" vTextAlign="Middle">
+				<expression><![CDATA[$F{tarifa_diaria_acordada}]]></expression>
+			</element>
+			<element kind="textField" uuid="b4000004-4444-4444-8444-000000000008" x="478" y="0" width="69" height="34" fontSize="9.5" pattern="$#,##0.##" hTextAlign="Right" vTextAlign="Middle">
+				<expression><![CDATA[$F{importe}]]></expression>
+			</element>
+		</band>
+	</detail>
+	<pageFooter height="26" splitType="Stretch">
+		<element kind="line" uuid="b5000005-5555-4555-8555-000000000001" x="0" y="2" width="555" height="1">
+			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</element>
+		<element kind="staticText" uuid="b5000005-5555-4555-8555-000000000002" x="0" y="6" width="260" height="16" forecolor="#666666" fontSize="9.0" vTextAlign="Middle">
+			<text><![CDATA[Sistema de Gestión de Alquileres]]></text>
+		</element>
+		<element kind="textField" uuid="b5000005-5555-4555-8555-000000000003" x="410" y="6" width="110" height="16" forecolor="#666666" fontSize="9.0" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA["Página " + $V{PAGE_NUMBER} + " de "]]></expression>
+		</element>
+		<element kind="textField" uuid="b5000005-5555-4555-8555-000000000004" x="522" y="6" width="33" height="16" forecolor="#666666" fontSize="9.0" evaluationTime="Report" vTextAlign="Middle">
+			<expression><![CDATA[$V{PAGE_NUMBER}]]></expression>
+		</element>
+	</pageFooter>
+	<summary height="88" splitType="Stretch">
+		<element kind="staticText" uuid="b6000006-6666-4666-8666-000000000001" x="300" y="14" width="150" height="18" fontSize="9.5" hTextAlign="Right" vTextAlign="Middle">
+			<text><![CDATA[Total de contratos:]]></text>
+		</element>
+		<element kind="textField" uuid="b6000006-6666-4666-8666-000000000002" x="455" y="14" width="92" height="18" fontSize="9.5" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA[$V{CANTIDAD_CONTRATOS}]]></expression>
+		</element>
+		<element kind="staticText" uuid="b6000006-6666-4666-8666-000000000003" x="300" y="32" width="150" height="18" fontSize="9.5" hTextAlign="Right" vTextAlign="Middle">
+			<text><![CDATA[Total de días de alquiler:]]></text>
+		</element>
+		<element kind="textField" uuid="b6000006-6666-4666-8666-000000000004" x="455" y="32" width="92" height="18" fontSize="9.5" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA[$V{TOTAL_DIAS}]]></expression>
+		</element>
+		<element kind="line" uuid="b6000006-6666-4666-8666-000000000005" x="300" y="55" width="247" height="1">
+			<pen lineColor="#444444"/>
+		</element>
+		<element kind="staticText" uuid="b6000006-6666-4666-8666-000000000006" x="300" y="61" width="150" height="20" fontSize="10.5" bold="true" hTextAlign="Right" vTextAlign="Middle">
+			<text><![CDATA[Importe general:]]></text>
+		</element>
+		<element kind="textField" uuid="b6000006-6666-4666-8666-000000000007" x="450" y="61" width="97" height="20" fontSize="10.5" pattern="$#,##0.00" bold="true" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA[$V{IMPORTE_GENERAL}]]></expression>
+		</element>
+	</summary>
+</jasperReport>
